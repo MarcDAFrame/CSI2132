@@ -1,0 +1,25 @@
+--Query to check availability and price, for Hosts and Guests
+
+SELECT propertyID, isOccupied, pricing FROM Property;
+
+--or, if we need these extra ones 
+
+SELECT propertyID, isOccupied FROM Property;
+SELECT propertyID, pricing FROM Property;
+
+--return just the available properties
+
+SELECT propertyID, isOccupied, pricing FROM Property WHERE isOccupied=FALSE;
+
+--Query to return property listings, for branch employees
+
+SELECT * FROM Property;
+
+--Query to upload new listing
+--To upload a new listing, replace the VALUES placeholders with variables in the code for when 
+--users upload their own listing, make everything mandatory for simplicity.
+
+INSERT INTO Property (propertyID, hostID, accommodationType, roomType, maxGuests, numBathrooms, numBedrooms, numBeds, pricing, isOccupied, rules) VALUES (int NOT NULL, int, varchar(255), varchar(255), int, int, int, int, float, boolean, varchar(255));
+
+
+

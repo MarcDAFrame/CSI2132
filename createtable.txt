@@ -1,0 +1,129 @@
+CREATE TABLE Users (
+	userID int NOT NULL,
+	phoneNumber int,
+	firstName varchar(255),
+	middleName varchar(255),
+	lastName varchar(255),
+	emailAddress varchar(255),
+	PRIMARY KEY (userID)
+);
+
+CREATE TABLE ContactInfo (
+	userID int NOT NULL,
+	emailAddress VARCHAR(255) NOT NULL,
+	phoneNumber int NOT NULL,
+	CONSTRAINT PK_ContactInfo PRIMARY KEY (userID, emailAddress, phoneNumber),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Address (
+	userID int NOT NULL,
+	houseNumber int,
+	street varchar(255),
+	city varchar(255),
+	province varchar(255),
+	postalCode varchar(255),
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Host (
+	userID int NOT NULL,
+	phoneNumber int,
+	emailAddress varchar(255),
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Guest (
+	userID int NOT NULL,
+	phoneNumber int,
+	emailAddress varchar(255),
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Employee (
+	userID int NOT NULL,
+	salary float,
+	position varchar(255),
+	branchID int,
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);
+
+CREATE TABLE BranchManager (
+	userID int NOT NULL,
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Employee(userID)
+);
+
+CREATE TABLE Branch (
+	branchID int NOT NULL,
+	phoneNumber int,
+	country varchar(255),
+	emailAddress varchar(255),
+	branchManagerID int,
+	PRIMARY KEY (branchID),
+	FOREIGN KEY (branchManagerID) REFERENCES BranchManager(userID)
+);
+
+CREATE TABLE Property (
+	propertyID int NOT NULL,
+	hostID int,
+	accommodationType varchar(255),
+	roomType varchar(255),
+	maxGuests int,
+	numBathrooms int,
+	numBedrooms int,
+	numBeds int,
+	pricing float,
+	isOccupied boolean,
+	rules varchar(255),
+	PRIMARY KEY (propertyID),
+	FOREIGN KEY (hostID) REFERENCES Host(userID)
+
+);
+
+CREATE TABLE RentalAgreement (
+	rentalAgreementID int NOT NULL,
+	startDate date,
+	endDate date,
+	hostID int,
+	guestID int,
+	propertyID int,
+	PRIMARY KEY (rentalAgreementID),
+	FOREIGN KEY (guestID) REFERENCES Host(userID),
+	FOREIGN KEY (hostID) REFERENCES Guest(userID),
+	FOREIGN KEY (propertyID) REFERENCES Property(propertyID)
+);
+
+
+
+CREATE TABLE Amenities (
+	propertyID int NOT NULL,
+	type varchar(255) NOT NULL,
+	CONSTRAINT PK_Amenities PRIMARY KEY (propertyID, type),
+	FOREIGN KEY (propertyID) REFERENCES Property(propertyID)
+);
+
+CREATE TABLE Review (
+	rentalAgreementID int NOT NULL,
+	reviewerID int NOT NULL,
+	rating int,
+	communications varchar(255),
+	cleanliness varchar(255),
+	value float,
+	CONSTRAINT PK_Review PRIMARY KEY (rentalAgreementID, reviewerID),
+	FOREIGN KEY (rentalAgreementID) REFERENCES RentalAgreement(rentalAgreementID),
+	FOREIGN KEY (reviewerID) REFERENCES Users(userID)
+);
+
+CREATE TABLE Payment (
+	paymentID int NOT NULL,
+	rentalAgreementID int,
+	paymentMethod varchar(255),
+	status boolean,
+	PRIMARY KEY (paymentID),
+	FOREIGN KEY (rentalAgreementID) REFERENCES RentalAgreement(rentalAgreementID)
+);
