@@ -1,30 +1,14 @@
 from flask import Flask
-from models import db, CarsModel
+from models import cur
 
 app = Flask(__name__)
 
 
-@app.route('/add')
-def addCar():
-    print(db)
-    new_car = CarsModel(name="testName", model="testModel", doors="doors")
-    db.session.add(new_car)
-    db.session.commit()
-    return 'Added'
-
 @app.route('/')
-
-def queryCar():
-    print(db)
-    cars = CarsModel.query.all()
-    results = [
-        {
-            "name": car.name,
-            "model": car.model,
-            "doors": car.doors
-        } for car in cars]
-    return {"cars": results, "count": len(results)}
-
+def addCar():
+    print(cur)
+    cur.execute("""CREATE DATABASE databasename""")
+    return 'Added'
 
 if __name__ == "__main__":
     app.run(port=1234)
