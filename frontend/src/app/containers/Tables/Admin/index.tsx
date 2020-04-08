@@ -7,7 +7,7 @@ interface Props {
 interface State {
 }
 
-export class User extends React.Component<Props, State> {
+export class Admin extends React.Component<Props, State> {
 
     constructor(props: Props, context: any) {
         super(props, context);
@@ -20,7 +20,7 @@ export class User extends React.Component<Props, State> {
             <div
                 className={style.normal}
             >
-                <h1>Guest/Host Table</h1>
+                <h1>Admin Table</h1>
                 <BackButton />
             </div>
         );
