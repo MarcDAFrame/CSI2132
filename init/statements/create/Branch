@@ -4,6 +4,5 @@ CREATE TABLE Branch (
 	country varchar(255),
 	emailAddress varchar(255),
 	branchManagerID int,
-	PRIMARY KEY (branchID),
 	FOREIGN KEY (branchManagerID) REFERENCES BranchManager(userID)
 );
