@@ -6,6 +6,11 @@ interface Props {
 }
 interface State {
     statement: string
+    res: {
+        message: string,
+        ok: boolean,
+        data: []
+    }
 }
 
 export class Admin extends React.Component<Props, State> {
@@ -13,7 +18,12 @@ export class Admin extends React.Component<Props, State> {
         super(props, context);
 
         this.state = {
-            statement: ""
+            statement: "",
+            res: {
+                ok: true,
+                message: "",
+                data: []
+            }
         };
     }
 
@@ -29,7 +39,9 @@ export class Admin extends React.Component<Props, State> {
             })
         });
         console.log(response)
-        console.log(response.body)
+        const d = await response.json()
+        console.log(d)
+        this.setState({res: d})
     }
 
     onChange = (e) => {
@@ -47,6 +59,12 @@ export class Admin extends React.Component<Props, State> {
                 <p style={{ marginTop: 10 }}>Enter SQL commands here:</p>
                 <button className={style.button} onClick={this.onClick}>Run query</button>
                 <input type="text" style={{ width: 700 }} value={this.state.statement} onChange={this.onChange}></input>
+                <span style={{color: "green", fontSize: "18px"}}>
+                    {JSON.stringify(this.state.res.data)}
+                </span>
+                <span style={{color: "red", fontSize: "24px"}}>
+                    {this.state.res.message}
+                </span>
             </div>
         );
     }

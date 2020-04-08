@@ -10,7 +10,7 @@ cors = CORS(app)
 
 def getResult():
     try:
-        result = cur.fetchone()
+        result = cur.fetchall()
     except:
         result = None
     return result
@@ -22,8 +22,27 @@ def addCar():
     return 'Added'
 
 
-@app.route('/employee')
-def getEmployees():
+@app.route('/uploadProperty')
+def uploadProperty():
+    data = request.json
+    
+
+@app.route('/getAvailableProperties')
+def getAvailableProperties():
+    print("hello world")
+    cur.execute("""
+        SELECT * FROM Property WHERE isOccupied=FALSE;
+    """)
+    result = getResult()
+
+    return jsonify({
+        "ok": True,
+        "data" : result
+    })
+
+@app.route('/getProperties')
+def getPropreties():
+    print("hello world")
     cur.execute("""
         SELECT * FROM Property;
     """)
