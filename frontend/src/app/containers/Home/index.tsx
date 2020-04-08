@@ -23,13 +23,15 @@ export class Home extends React.Component<Props, State> {
   }
   render() {
     return (
-      <div
+      <div style={{margin: 10}}
         className={style.normal}
       >
       <h1>Home</h1>
       {tables.map((table)=>(
         <a href={table.href}>
+          <button className={style.button}>
           {table.label} - ({table.href})
+          </button>
           <br></br>
         </a>
       ))}

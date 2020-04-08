@@ -1,11 +1,10 @@
 CREATE TABLE RentalAgreement (
-	rentalAgreementID int NOT NULL,
+	rentalAgreementID SERIAL PRIMARY KEY,
 	startDate date,
 	endDate date,
 	hostID int,
 	guestID int,
 	propertyID int,
-	PRIMARY KEY (rentalAgreementID),
 	FOREIGN KEY (guestID) REFERENCES Host(userID),
 	FOREIGN KEY (hostID) REFERENCES Guest(userID),
 	FOREIGN KEY (propertyID) REFERENCES Property(propertyID)
