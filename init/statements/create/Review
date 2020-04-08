@@ -1,0 +1,11 @@
+CREATE TABLE Review (
+	rentalAgreementID int NOT NULL,
+	reviewerID int NOT NULL,
+	rating int,
+	communications varchar(255),
+	cleanliness varchar(255),
+	value float,
+	CONSTRAINT PK_Review PRIMARY KEY (rentalAgreementID, reviewerID),
+	FOREIGN KEY (rentalAgreementID) REFERENCES RentalAgreement(rentalAgreementID),
+	FOREIGN KEY (reviewerID) REFERENCES Users(userID)
+);

@@ -1,0 +1,7 @@
+CREATE TABLE ContactInfo (
+	userID int NOT NULL,
+	emailAddress VARCHAR(255) NOT NULL,
+	phoneNumber varchar(255) NOT NULL,
+	CONSTRAINT PK_ContactInfo PRIMARY KEY (userID, emailAddress, phoneNumber),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);

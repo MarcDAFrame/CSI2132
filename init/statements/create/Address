@@ -1,0 +1,10 @@
+CREATE TABLE Address (
+	userID int NOT NULL,
+	houseNumber int,
+	street varchar(255),
+	city varchar(255),
+	province varchar(255),
+	postalCode varchar(255),
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);

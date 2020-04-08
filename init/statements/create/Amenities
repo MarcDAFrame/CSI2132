@@ -1,0 +1,6 @@
+CREATE TABLE Amenities (
+	propertyID int NOT NULL,
+	type varchar(255) NOT NULL,
+	CONSTRAINT PK_Amenities PRIMARY KEY (propertyID, type),
+	FOREIGN KEY (propertyID) REFERENCES Property(propertyID)
+);

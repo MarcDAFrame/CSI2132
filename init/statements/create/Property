@@ -1,0 +1,15 @@
+CREATE TABLE Property (
+	propertyID int NOT NULL,
+	hostID int,
+	accommodationType varchar(255),
+	roomType varchar(255),
+	maxGuests int,
+	numBathrooms int,
+	numBedrooms int,
+	numBeds int,
+	pricing float,
+	isOccupied boolean,
+	rules varchar(255),
+	PRIMARY KEY (propertyID),
+	FOREIGN KEY (hostID) REFERENCES Host(userID)
+);

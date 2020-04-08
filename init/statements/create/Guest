@@ -1,0 +1,7 @@
+CREATE TABLE Guest (
+	userID int NOT NULL,
+	phoneNumber varchar(255),
+	emailAddress varchar(255),
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);

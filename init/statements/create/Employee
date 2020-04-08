@@ -1,0 +1,8 @@
+CREATE TABLE Employee (
+	userID int NOT NULL,
+	salary float,
+	position varchar(255),
+	branchID int,
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Users(userID)
+);

@@ -1,6 +1,6 @@
 CREATE TABLE Users (
 	userID int NOT NULL,
-	phoneNumber int,
+	phoneNumber varchar(255),
 	firstName varchar(255),
 	middleName varchar(255),
 	lastName varchar(255),
@@ -11,7 +11,7 @@ CREATE TABLE Users (
 CREATE TABLE ContactInfo (
 	userID int NOT NULL,
 	emailAddress VARCHAR(255) NOT NULL,
-	phoneNumber int NOT NULL,
+	phoneNumber varchar(255) NOT NULL,
 	CONSTRAINT PK_ContactInfo PRIMARY KEY (userID, emailAddress, phoneNumber),
 	FOREIGN KEY (userID) REFERENCES Users(userID)
 );
@@ -29,7 +29,7 @@ CREATE TABLE Address (
 
 CREATE TABLE Host (
 	userID int NOT NULL,
-	phoneNumber int,
+	phoneNumber varchar(255),
 	emailAddress varchar(255),
 	PRIMARY KEY (userID),
 	FOREIGN KEY (userID) REFERENCES Users(userID)
@@ -37,7 +37,7 @@ CREATE TABLE Host (
 
 CREATE TABLE Guest (
 	userID int NOT NULL,
-	phoneNumber int,
+	phoneNumber varchar(255),
 	emailAddress varchar(255),
 	PRIMARY KEY (userID),
 	FOREIGN KEY (userID) REFERENCES Users(userID)
@@ -60,7 +60,7 @@ CREATE TABLE BranchManager (
 
 CREATE TABLE Branch (
 	branchID int NOT NULL,
-	phoneNumber int,
+	phoneNumber varchar(255),
 	country varchar(255),
 	emailAddress varchar(255),
 	branchManagerID int,
@@ -82,7 +82,6 @@ CREATE TABLE Property (
 	rules varchar(255),
 	PRIMARY KEY (propertyID),
 	FOREIGN KEY (hostID) REFERENCES Host(userID)
-
 );
 
 CREATE TABLE RentalAgreement (

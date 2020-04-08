@@ -1,0 +1,8 @@
+CREATE TABLE Payment (
+	paymentID int NOT NULL,
+	rentalAgreementID int,
+	paymentMethod varchar(255),
+	status boolean,
+	PRIMARY KEY (paymentID),
+	FOREIGN KEY (rentalAgreementID) REFERENCES RentalAgreement(rentalAgreementID)
+);

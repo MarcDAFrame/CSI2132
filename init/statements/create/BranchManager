@@ -1,0 +1,5 @@
+CREATE TABLE BranchManager (
+	userID int NOT NULL,
+	PRIMARY KEY (userID),
+	FOREIGN KEY (userID) REFERENCES Employee(userID)
+);
