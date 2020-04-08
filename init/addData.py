@@ -13,8 +13,8 @@ def randomPick(li):
 
 def addRow():
     cur.execute("""
-        INSERT INTO Users (userID, phoneNumber, firstName, middleName, lastName, emailAddress) 
-        VALUES (%(userID)s, %(phoneNumber)s, %(firstName)s, %(middleName)s, %(lastName)s, %(emailAddress)s) RETURNING userID;
+        INSERT INTO Users (phoneNumber, firstName, middleName, lastName, emailAddress) 
+        VALUES (%(phoneNumber)s, %(firstName)s, %(middleName)s, %(lastName)s, %(emailAddress)s) RETURNING userID;
     """, getUser())
     # https://stackoverflow.com/questions/5247685/python-postgres-psycopg2-getting-id-of-row-just-inserted
     userID = cur.fetchone()[0]
@@ -25,7 +25,7 @@ def addRow():
     """, getContactInfo(userID))
 
     cur.execute("""
-        INSERT INTO Address (userID, houseNumber, street, city, province, postalCode,
+        INSERT INTO Address (userID, houseNumber, street, city, province, postalCode)
         VALUES (%(userID)s, %(houseNumber)s, %(street)s, %(city)s, %(province)s, %(postalCode)s);
     """, getAddress(userID))
 
@@ -37,19 +37,16 @@ def addRow():
 
 
     cur.execute("""
-        INSERT INTO Guest (userID, phoneNumber, emailAddress,)
+        INSERT INTO Guest (userID, phoneNumber, emailAddress)
         VALUES (%(userID)s, %(phoneNumber)s, %(emailAddress)s) RETURNING userID;
     """, getGuest(userID))
     guestID = cur.fetchone()[0]
 
-    cur.execute("""
-        INSERT INTO BranchManager (userID) 
-        VALUES (%(userID)s);
-    """, getBranchManager(userID))
+
 
     cur.execute("""
-        INSERT INTO Branch (branchID, phoneNumber, country, emailAddress, branchManagerID)
-        VALUES (%(branchID)s, %(phoneNumber)s, %(country)s, %(emailAddress)s, %(branchManagerID)s) RETURNING branchID;
+        INSERT INTO Branch (phoneNumber, country, emailAddress, branchManagerID)
+        VALUES (%(phoneNumber)s, %(country)s, %(emailAddress)s, %(branchManagerID)s) RETURNING branchID;
     """, getBranch(userID))
     branchID = cur.fetchone()[0]
 
@@ -58,16 +55,20 @@ def addRow():
         VALUES (%(userID)s, %(salary)s, %(position)s, %(branchID)s);
     """, getEmployee(userID, branchID))
 
+    cur.execute("""
+        INSERT INTO BranchManager (userID) 
+        VALUES (%(userID)s);
+    """, getBranchManager(userID))
 
     cur.execute("""
-        INSERT INTO Property (hostID, accommodationType, roomType, maxGuests, numBathrooms, numBedrooms, numBeds, pricing, isOccupied, rules) VALUES (int NOT NULL, int, varchar(255), varchar(255), int, int, int, int, float, boolean, varchar(255));
-        VALUES (%(hostID)s, %(accommodationType)s, %(roomType)s, %(maxGuests)s, %(numBathrooms)s, %(numBeds)s, %(pricing)s, %(isOccupied)s, %(rules)s) RETURNING propertyID;
+        INSERT INTO Property (hostID, accommodationType, roomType, maxGuests, numBathrooms, numBedrooms, numBeds, pricing, isOccupied, rules)
+        VALUES (%(hostID)s, %(accommodationType)s, %(roomType)s, %(maxGuests)s, %(numBathrooms)s, %(numBedrooms)s, %(numBeds)s, %(pricing)s, %(isOccupied)s, %(rules)s) RETURNING propertyID;
     """, getProperty(userID))
     propertyID = cur.fetchone()[0]
 
     cur.execute("""
-        INSERT INTO RentalAgreement (rentalAgreementID, startDate, endDate, hostID, guestID, propertyID)
-        VALUES (%(rentalAgreementID)s, %(startDate)s, %(endDate)s, %(hostID)s, %(guestID)s, %(propertyID)s) RETURNING rentalAgreementID;
+        INSERT INTO RentalAgreement (startDate, endDate, hostID, guestID, propertyID)
+        VALUES (%(startDate)s, %(endDate)s, %(hostID)s, %(guestID)s, %(propertyID)s) RETURNING rentalAgreementID;
     """, getRentalAgreement(hostID, guestID, propertyID))
     rentalAgreementID = cur.fetchone()[0]
 
@@ -85,17 +86,16 @@ def addRow():
 
 
     cur.execute("""
-        INSERT INTO Payment (paymentID, rentalAgreementID, paymentMethod, status,
-        VALUES (%(paymentID)s, %(rentalAgreementID)s, %(paymentMethod)s, %(status)s);
+        INSERT INTO Payment (rentalAgreementID, paymentMethod, status)
+        VALUES (%(rentalAgreementID)s, %(paymentMethod)s, %(status)s);
     """, getPayment(rentalAgreementID))
     
 
-    print(id_of_new_row)
+    # print(id_of_new_row)
 
 
 def getUser():
     return {
-        "userID" : 3,
         "phoneNumber" : fake.phone_number(),
         "firstName" : fake.first_name(),
         "middleName" : fake.first_name(),
@@ -151,8 +151,8 @@ def getBranch(branchManagerID):
     return {
         "phoneNumber" : fake.phone_number(),
         "country" : fake.country(),
-        "emailAddress" : fake.email_address(),
-        "branchManagerID" : branchManagerID
+        "emailAddress" : fake.email(),
+        "branchManagerID" : None #branchManagerID
     }
 
 def getProperty(hostID):
@@ -203,6 +203,10 @@ def getPayment(rentalAgreementID):
         "status" : randomPick([True, False, True, True, True]),   
     }
 
-# print(getUser())
-print(getEmployee(0, 0))
-# addRow()
+
+if __name__ == "__main__":  
+    # print(getUser())
+    # print(getEmployee(0, 0))
+    for i in range(1000):
+        print("Adding User ", i)
+        addRow()

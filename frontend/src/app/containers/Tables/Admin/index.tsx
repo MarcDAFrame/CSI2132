@@ -59,6 +59,8 @@ export class Admin extends React.Component<Props, State> {
                 <p style={{ marginTop: 10 }}>Enter SQL commands here:</p>
                 <button className={style.button} onClick={this.onClick}>Run query</button>
                 <input type="text" style={{ width: 700 }} value={this.state.statement} onChange={this.onChange}></input>
+                <br/>
+                <h2>result:</h2> 
                 <span style={{color: "green", fontSize: "18px"}}>
                     {JSON.stringify(this.state.res.data)}
                 </span>
