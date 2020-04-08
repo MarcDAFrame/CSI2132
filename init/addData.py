@@ -31,14 +31,16 @@ def addRow():
 
     cur.execute("""
         INSERT INTO Host (userID, phoneNumber, emailAddress)
-        VALUES (%(userID)s, %(phoneNumber)s, %(emailAddress)s);
+        VALUES (%(userID)s, %(phoneNumber)s, %(emailAddress)s) RETURNING userID;
     """, getHost(userID))
+    hostID = cur.fetchone()[0]
 
 
     cur.execute("""
         INSERT INTO Guest (userID, phoneNumber, emailAddress,)
-        VALUES (%(userID)s, %(phoneNumber)s, %(emailAddress)s);
+        VALUES (%(userID)s, %(phoneNumber)s, %(emailAddress)s) RETURNING userID;
     """, getGuest(userID))
+    guestID = cur.fetchone()[0]
 
     cur.execute("""
         INSERT INTO BranchManager (userID) 
@@ -47,7 +49,7 @@ def addRow():
 
     cur.execute("""
         INSERT INTO Branch (branchID, phoneNumber, country, emailAddress, branchManagerID)
-        VALUES (%(branchID)s, %(phoneNumber)s, %(country)s, %(emailAddress)s, %(branchManagerID)s) RETURN branchID;
+        VALUES (%(branchID)s, %(phoneNumber)s, %(country)s, %(emailAddress)s, %(branchManagerID)s) RETURNING branchID;
     """, getBranch(userID))
     branchID = cur.fetchone()[0]
 
@@ -57,40 +59,35 @@ def addRow():
     """, getEmployee(userID, branchID))
 
 
-
-
-
     cur.execute("""
         INSERT INTO Property (propertyID, hostID, accommodationType, roomType, maxGuests, numBathrooms, numBedrooms, numBeds, pricing, isOccupied, rules) VALUES (int NOT NULL, int, varchar(255), varchar(255), int, int, int, int, float, boolean, varchar(255));
-        VALUES (%(propertyID)s, %(hostID)s, %(accommodationType)s, %(roomType)s, %(maxGuests)s, %(numBathrooms)s, %(numBeds)s, %(pricing)s, %(isOccupied)s, %(rules)s);
-    """, getProperty(userID))
-
+        VALUES (%(propertyID)s, %(hostID)s, %(accommodationType)s, %(roomType)s, %(maxGuests)s, %(numBathrooms)s, %(numBeds)s, %(pricing)s, %(isOccupied)s, %(rules)s) RETURNING propertyID;
+    """, getProperty())
+    propertyID = cur.fetchone()[0]
 
     cur.execute("""
         INSERT INTO RentalAgreement (rentalAgreementID, startDate, endDate, hostID, guestID, propertyID)
-        VALUES (%(rentalAgreementID)s, %(startDate)s, %(endDate)s, %(hostID)s, %(guestID)s, %(propertyID)s);
-    """, getRentalAgreement(userID))
+        VALUES (%(rentalAgreementID)s, %(startDate)s, %(endDate)s, %(hostID)s, %(guestID)s, %(propertyID)s) RETURNING rentalAgreementID;
+    """, getRentalAgreement(hostID, guestID, propertyID))
+    rentalAgreementID = cur.fetchone()[0]
 
 
     cur.execute("""
         INSERT INTO Amenities (propertyID, type) 
         VALUES (%(propertyID)s, %(type)s);
-    """, getAmenities(userID))
+    """, getAmenities(propertyID))
 
 
     cur.execute("""
         INSERT INTO Review (rentalAgreementID, reviewerID, rating, communications, cleanliness, value)
         VALUES (%(rentalAgreementID)s, %(reviewerID)s, %(rating)s, %(communications)s, %(cleanliness)s, %(value)s);
-    """, getReview(userID))
+    """, getReview(rentalAgreementID, userID))
 
 
     cur.execute("""
         INSERT INTO Payment (paymentID, rentalAgreementID, paymentMethod, status,
         VALUES (%(paymentID)s, %(rentalAgreementID)s, %(paymentMethod)s, %(status)s);
-    """, getPayment(userID))
-
-
-
+    """, getPayment(rentalAgreementID))
     
 
     print(id_of_new_row)
