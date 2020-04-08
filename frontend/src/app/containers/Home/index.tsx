@@ -8,7 +8,9 @@ interface State {
 
 
 const tables = [
-  {href: "/tables/user", label: "Users Table"},
+  {href: "/tables/user", label: "Guest/Host Table"},
+  {href: "/tables/employee", label: "Employee Table"},
+  {href: "/tables/admin", label: "Admin Table"},
 ]
 
 export class Home extends React.Component<Props, State> {
@@ -28,6 +30,7 @@ export class Home extends React.Component<Props, State> {
       {tables.map((table)=>(
         <a href={table.href}>
           {table.label} - ({table.href})
+          <br></br>
         </a>
       ))}
       </div>
