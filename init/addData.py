@@ -17,6 +17,7 @@ def addRow():
         VALUES (%(userID)s, %(phoneNumber)s, %(firstName)s, %(middleName)s, %(lastName)s, %(emailAddress)s) RETURNING userID;
     """, getUser())
     userID = cur.fetchone()[0]
+
     cur.execute("""
         INSERT INTO ContactInfo (userID, emailAddress, phoneNumber) 
         VALUES (%(userID)s, %(emailAddress)s, %(phoneNumber)s);
@@ -26,6 +27,66 @@ def addRow():
         INSERT INTO Address (userID, houseNumber, street, city, province, postalCode,
         VALUES (%(userID)s, %(houseNumber)s, %(street)s, %(city)s, %(province)s, %(postalCode)s);
     """, getAddress(userID))
+
+    cur.execute("""
+        INSERT INTO Host (userID, phoneNumber, emailAddress)
+        VALUES (%(userID)s, %(phoneNumber)s, %(emailAddress)s);
+    """, getHost(userID))
+
+
+    cur.execute("""
+        INSERT INTO Guest (userID, phoneNumber, emailAddress,)
+        VALUES (%(userID)s, %(phoneNumber)s, %(emailAddress)s);
+    """, getGuest(userID))
+
+
+    cur.execute("""
+        INSERT INTO Employee (userID, salary, position, branchID)
+        VALUES (%(userID)s, %(salary)s, %(position)s, %(branchID)s);
+    """, getEmployee(userID, branchID))
+
+
+    cur.execute("""
+        INSERT INTO BranchManager (userID) 
+        VALUES (%(userID)s);
+    """, getBranchManager(userID))
+
+
+    cur.execute("""
+        INSERT INTO Branch (branchID, phoneNumber, country, emailAddress, branchManagerID)
+        VALUES (%(branchID)s, %(phoneNumber)s, %(country)s, %(emailAddress)s, %(branchManagerID)s);
+    """, getBranch(userID))
+
+    cur.execute("""
+        INSERT INTO Property (propertyID, hostID, accommodationType, roomType, maxGuests, numBathrooms, numBedrooms, numBeds, pricing, isOccupied, rules) VALUES (int NOT NULL, int, varchar(255), varchar(255), int, int, int, int, float, boolean, varchar(255));
+        VALUES (%(propertyID)s, %(hostID)s, %(accommodationType)s, %(roomType)s, %(maxGuests)s, %(numBathrooms)s, %(numBeds)s, %(pricing)s, %(isOccupied)s, %(rules)s);
+    """, getProperty(userID))
+
+
+    cur.execute("""
+        INSERT INTO RentalAgreement (rentalAgreementID, startDate, endDate, hostID, guestID, propertyID)
+        VALUES (%(rentalAgreementID)s, %(startDate)s, %(endDate)s, %(hostID)s, %(guestID)s, %(propertyID)s);
+    """, getRentalAgreement(userID))
+
+
+    cur.execute("""
+        INSERT INTO Amenities (propertyID, type) 
+        VALUES (%(propertyID)s, %(type)s);
+    """, getAmenities(userID))
+
+
+    cur.execute("""
+        INSERT INTO Review (rentalAgreementID, reviewerID, rating, communications, cleanliness, value)
+        VALUES (%(rentalAgreementID)s, %(reviewerID)s, %(rating)s, %(communications)s, %(cleanliness)s, %(value)s);
+    """, getReview(userID))
+
+
+    cur.execute("""
+        INSERT INTO Payment (paymentID, rentalAgreementID, paymentMethod, status,
+        VALUES (%(paymentID)s, %(rentalAgreementID)s, %(paymentMethod)s, %(status)s);
+    """, getPayment(userID))
+
+
 
     
     print(id_of_new_row)
@@ -43,7 +104,7 @@ def getUser():
 
 def getContactInfo(userID):
     return {
-        "userID" : userId,
+        "userID" : userID,
         "phoneNumber" : fake.phone_number(),
         "emailAddress" : fake.email() 
     }
@@ -85,11 +146,12 @@ def getBranchManager(userID):
         "userID" : userID,
     }
 
-def getBranch():
+def getBranch(branchManagerID):
     return {
         "phoneNumber" : fake.phone_number(),
         "country" : fake.country(),
         "emailAddress" : fake.email_address(),
+        "branchManagerID": branchManagerID,
     }
 
 def getProperty():
