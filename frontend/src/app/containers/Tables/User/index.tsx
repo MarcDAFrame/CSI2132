@@ -5,16 +5,18 @@ import { BackButton } from 'app/components/BackButton';
 interface Props {
 }
 interface State {
-    hostID: number
-    accommodationType: string
-    roomType: string
-    maxGuests: string
-    numBathrooms: string
-    numBedrooms: string
-    numBeds: string
-    pricing: string
-    isOccupied: string
-    rules: string
+    form: {
+        hostID: number
+        accommodationType: string
+        roomType: string
+        maxGuests: number
+        numBathrooms: number
+        numBedrooms: number
+        numBeds: number
+        pricing: number
+        isOccupied: boolean
+        rules: string
+    }
     res: {
         message: string,
         ok: boolean,
@@ -31,16 +33,18 @@ export class User extends React.Component<Props, State> {
         super(props, context);
 
         this.state = {
-            hostID: 0,
-            accommodationType: "",
-            roomType: "",
-            maxGuests: "",
-            numBathrooms: "",
-            numBedrooms: "",
-            numBeds: "",
-            pricing: "",
-            isOccupied: "",
-            rules: "",
+            form: {
+                hostID: 0,
+                accommodationType: "",
+                roomType: "",
+                maxGuests: 0,
+                numBathrooms: 0,
+                numBedrooms: 0,
+                numBeds: 0,
+                pricing: 0,
+                isOccupied: false,
+                rules: "",
+            },
             res: {
                 ok: true,
                 message: "",
@@ -49,20 +53,23 @@ export class User extends React.Component<Props, State> {
         };
     }
 
-    clickUpload() {
+    clickUpload = async () => {
         console.log('TODO');
-        /**
-        "accommodationType" : fake.text()[0:100],
-        "roomType" : fake.text()[0:50],
-        "maxGuests" : randomNum(2, 15),
-        "numBathrooms" : randomNum(1, 5),
-        "numBedrooms" : randomNum(1, 10),
-        "numBeds" : randomNum(1, 20),
-        "pricing" : randomNum(80, 550),
-        "isOccupied" : randomPick([True, False]),
-        "rules" : fake.text()[0:150],
-         */
-        const obj = {...this.state}
+        const obj = {
+            ...this.state.form,
+        }
+        console.log(obj)
+
+        const response = await fetch("http://localhost:1234/getProperties", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        console.log(response)
+        const d = await response.json()
+        console.log(d)
+        this.setState({ res: d })
 
     }
     clickAll = async () => {
@@ -91,7 +98,8 @@ export class User extends React.Component<Props, State> {
         this.setState({ res: d })
     }
     onChange = (e) => {
-        this.setState({[e.target.name]: e.target.value} as any)
+        this.state.form[e.target.name] = e.target.value
+        this.setState({form: this.state.form} as any)
     }
     render() {
         return (
@@ -121,8 +129,8 @@ export class User extends React.Component<Props, State> {
                     <p style={{ marginTop: 10 }}>numBeds (int): </p> <input type="number"></input>
                     <p style={{ marginTop: 10 }}>pricing (float): </p> <input type="number"></input>
                     <p style={{ marginTop: 10 }}>isOccupied (boolean): </p> <select>
-                        <option>FALSE</option>
-                        <option>TRUE</option>
+                        <option value={false}>FALSE</option>
+                        <option value={true}>TRUE</option>
                     </select>
                     <p style={{ marginTop: 10 }}>rules (varchar(255)): </p> <input type="text"></input>
                 </div>

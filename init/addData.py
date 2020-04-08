@@ -60,9 +60,9 @@ def addRow():
 
 
     cur.execute("""
-        INSERT INTO Property (propertyID, hostID, accommodationType, roomType, maxGuests, numBathrooms, numBedrooms, numBeds, pricing, isOccupied, rules) VALUES (int NOT NULL, int, varchar(255), varchar(255), int, int, int, int, float, boolean, varchar(255));
-        VALUES (%(propertyID)s, %(hostID)s, %(accommodationType)s, %(roomType)s, %(maxGuests)s, %(numBathrooms)s, %(numBeds)s, %(pricing)s, %(isOccupied)s, %(rules)s) RETURNING propertyID;
-    """, getProperty())
+        INSERT INTO Property (hostID, accommodationType, roomType, maxGuests, numBathrooms, numBedrooms, numBeds, pricing, isOccupied, rules) VALUES (int NOT NULL, int, varchar(255), varchar(255), int, int, int, int, float, boolean, varchar(255));
+        VALUES (%(hostID)s, %(accommodationType)s, %(roomType)s, %(maxGuests)s, %(numBathrooms)s, %(numBeds)s, %(pricing)s, %(isOccupied)s, %(rules)s) RETURNING propertyID;
+    """, getProperty(userID))
     propertyID = cur.fetchone()[0]
 
     cur.execute("""
@@ -155,8 +155,9 @@ def getBranch(branchManagerID):
         "branchManagerID" : branchManagerID
     }
 
-def getProperty():
+def getProperty(hostID):
     return {
+        "hostID" : hostID,
         "accommodationType" : fake.text()[0:100],
         "roomType" : fake.text()[0:50],
         "maxGuests" : randomNum(2, 15),
