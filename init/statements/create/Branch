@@ -1,5 +1,5 @@
 CREATE TABLE Branch (
-	branchID int NOT NULL,
+	branchID SERIAL PRIMARY KEY,
 	phoneNumber varchar(255),
 	country varchar(255),
 	emailAddress varchar(255),
