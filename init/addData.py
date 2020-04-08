@@ -2,7 +2,7 @@ from faker import Faker
 from cur import cur
 from random import random, choice
 
-
+# https://faker.readthedocs.io/en/master/providers/faker.providers.address.html
 fake = Faker(["en_US"])
 Faker.seed(123)
 
@@ -16,7 +16,9 @@ def addRow():
         INSERT INTO Users (userID, phoneNumber, firstName, middleName, lastName, emailAddress) 
         VALUES (%(userID)s, %(phoneNumber)s, %(firstName)s, %(middleName)s, %(lastName)s, %(emailAddress)s) RETURNING userID;
     """, getUser())
+    # https://stackoverflow.com/questions/5247685/python-postgres-psycopg2-getting-id-of-row-just-inserted
     userID = cur.fetchone()[0]
+
     cur.execute("""
         INSERT INTO ContactInfo (userID, emailAddress, phoneNumber) 
         VALUES (%(userID)s, %(emailAddress)s, %(phoneNumber)s);
@@ -28,6 +30,7 @@ def addRow():
     """, getAddress(userID))
 
     
+
     print(id_of_new_row)
 
 
@@ -85,11 +88,12 @@ def getBranchManager(userID):
         "userID" : userID,
     }
 
-def getBranch():
+def getBranch(branchManagerID):
     return {
         "phoneNumber" : fake.phone_number(),
         "country" : fake.country(),
         "emailAddress" : fake.email_address(),
+        "branchManagerID" : branchManagerID
     }
 
 def getProperty():
