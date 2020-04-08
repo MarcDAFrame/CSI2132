@@ -1,11 +1,10 @@
 CREATE TABLE Users (
-	userID int NOT NULL,
+	userID SERIAL PRIMARY KEY,
 	phoneNumber varchar(255),
 	firstName varchar(255),
 	middleName varchar(255),
 	lastName varchar(255),
-	emailAddress varchar(255),
-	PRIMARY KEY (userID)
+	emailAddress varchar(255)
 );
 
 CREATE TABLE ContactInfo (
