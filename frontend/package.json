@@ -62,6 +62,7 @@
     "@types/jest": "^24.0.15",
     "@types/react-modal": "^3.8.2",
     "bootstrap": "^4.4.1",
+    "mdbreact": "^4.25.5",
     "react": "^16.8.6",
     "react-apollo": "^3.1.4",
     "react-dom": "^16.8.6",
