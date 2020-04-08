@@ -113,18 +113,18 @@ export class User extends React.Component<Props, State> {
 
                     {/* <p style={{ marginTop: 10 }}>propertyID (int):</p> <input name="" type="number"></input> */}
                     <p style={{ marginTop: 10 }}>hostID (int): </p> <input name="hostID" onChange={this.onChange} value={this.state.hostID} type="number"></input>
-                    <p style={{ marginTop: 10 }}>accommodationType (varchar(255)): </p> <input type="text"></input>
-                    <p style={{ marginTop: 10 }}> roomType (varchar(255)): </p> <input type="text"></input>
-                    <p style={{ marginTop: 10 }}>maxGuests (int): </p> <input type="number"></input>
-                    <p style={{ marginTop: 10 }}>numBathrooms (int): </p> <input type="number"></input>
-                    <p style={{ marginTop: 10 }}>numBedrooms (int): </p> <input type="number"></input>
-                    <p style={{ marginTop: 10 }}>numBeds (int): </p> <input type="number"></input>
-                    <p style={{ marginTop: 10 }}>pricing (float): </p> <input type="number"></input>
-                    <p style={{ marginTop: 10 }}>isOccupied (boolean): </p> <select>
+                    <p style={{ marginTop: 10 }}>accommodationType (varchar(255)): </p> <input name="accommodationType" onChange={this.onChange} value={this.state.accommodationType} type="text"></input>
+                    <p style={{ marginTop: 10 }}> roomType (varchar(255)): </p> <input name="roomType" onChange={this.onChange} value={this.state.roomType} type="text"></input>
+                    <p style={{ marginTop: 10 }}>maxGuests (int): </p> <input name="maxGuests" onChange={this.onChange} value={this.state.maxGuests} type="number"></input>
+                    <p style={{ marginTop: 10 }}>numBathrooms (int): </p> <input name="numBathrooms" onChange={this.onChange} value={this.state.numBathrooms} type="number"></input>
+                    <p style={{ marginTop: 10 }}>numBedrooms (int): </p> <input name="numBedrooms" onChange={this.onChange} value={this.state.numBedrooms} type="number"></input>
+                    <p style={{ marginTop: 10 }}>numBeds (int): </p> <input name="numBeds" onChange={this.onChange} value={this.state.numBeds} type="number"></input>
+                    <p style={{ marginTop: 10 }}>pricing (float): </p> <input name="pricing" onChange={this.onChange} value={this.state.pricing} type="number"></input>
+                    <p style={{ marginTop: 10 }}>isOccupied (boolean): </p> <select name="isOccupied" onChange={this.onChange} value={this.state.isOccupied}>
                         <option>FALSE</option>
                         <option>TRUE</option>
                     </select>
-                    <p style={{ marginTop: 10 }}>rules (varchar(255)): </p> <input type="text"></input>
+                    <p style={{ marginTop: 10 }}>rules (varchar(255)): </p> <input name="rules" onChange={this.onChange} value={this.state.rules} type="text"></input>
                 </div>
 
             </div>
