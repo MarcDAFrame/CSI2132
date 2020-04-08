@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as style from '../style.scss';
 import { BackButton } from 'app/components/BackButton';
+import { AllPropertyTable } from 'app/components/AllPropertyTable';
 
 interface Props {
 }
@@ -47,7 +48,7 @@ export class Employee extends React.Component<Props, State> {
                 <BackButton />
                 <br></br>
                 <button className={style.button} onClick={ this.onClick }>Display all properties</button>
-                {JSON.stringify(this.state.res.data)}
+                <AllPropertyTable rows={this.state.res.data} />
             </div>
         );
     }

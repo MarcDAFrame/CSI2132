@@ -11,5 +11,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_DB: CSI2132_Postgres_container
+  frontend: 
+    image: "node:10"
+    container_name: "CSI2132_Frontend"
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - app:/app
 volumes:
   sql_data:

@@ -205,8 +205,6 @@ def getPayment(rentalAgreementID):
 
 
 if __name__ == "__main__":  
-    # print(getUser())
-    # print(getEmployee(0, 0))
-    for i in range(1000):
-        print("Adding User ", i)
+    for i in range(30):
+        print("Adding User -- ", i)
         addRow()

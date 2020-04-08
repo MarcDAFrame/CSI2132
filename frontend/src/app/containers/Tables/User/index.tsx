@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as style from '../style.scss';
 import { BackButton } from 'app/components/BackButton';
+import { AllPropertyTable } from 'app/components/AllPropertyTable';
 
 interface Props {
 }
@@ -114,8 +115,8 @@ export class User extends React.Component<Props, State> {
                 <button className={style.button} onClick={this.clickAll}>Display all properties</button>
                 <button className={style.button} onClick={this.clickAvailable}>Display available properties</button>
                 <br></br>
-                {JSON.stringify(this.state.res.data.slice(0, 10))}
-
+                {/* {JSON.stringify(this.state.res.data.slice(0, 10))} */}
+                <AllPropertyTable rows={this.state.res.data}/>
                 <p style={{ marginTop: 10 }}>To upload a new listing fill in all fields and then press "Upload new property listing", note: propertyID must be unique</p>
 
                 <button className={style.button} onClick={this.clickUpload}>Upload new property listing</button>
@@ -125,7 +126,7 @@ export class User extends React.Component<Props, State> {
                     {/* <p style={{ marginTop: 10 }}>propertyID (int):</p> <input name="" type="number"></input> */}
                     <p style={{ marginTop: 10 }}>hostID (int): </p> <input name="hostID" onChange={this.onChange} value={this.state.form.hostID} type="number"></input>
                     <p style={{ marginTop: 10 }}>accommodationType (varchar(255)): </p> <input name="accommodationType" onChange={this.onChange} value={this.state.form.accommodationType} type="text"></input>
-                    <p style={{ marginTop: 10 }}> roomType (varchar(255)): </p> <input name="roomType" onChange={this.onChange} value={this.state.form.roomType} type="text"></input>
+                    <p style={{ marginTop: 10 }}>roomType (varchar(255)): </p> <input name="roomType" onChange={this.onChange} value={this.state.form.roomType} type="text"></input>
                     <p style={{ marginTop: 10 }}>maxGuests (int): </p> <input name="maxGuests" onChange={this.onChange} value={this.state.form.maxGuests} type="number"></input>
                     <p style={{ marginTop: 10 }}>numBathrooms (int): </p> <input name="numBathrooms" onChange={this.onChange} value={this.state.form.numBathrooms} type="number"></input>
                     <p style={{ marginTop: 10 }}>numBedrooms (int): </p> <input name="numBedrooms" onChange={this.onChange} value={this.state.form.numBedrooms} type="number"></input>
@@ -134,7 +135,6 @@ export class User extends React.Component<Props, State> {
                     <p style={{ marginTop: 10 }}>isOccupied (boolean): </p> <select name="isOccupied" onChange={this.onChange} value={this.state.form.isOccupied}>
                         <option value={"false"}>FALSE</option>
                         <option value={"true"}>TRUE</option>
-
                     </select>
                     <p style={{ marginTop: 10 }}>rules (varchar(255)): </p> <input name="rules" onChange={this.onChange} value={this.state.form.rules} type="text"></input>
                 </div>
