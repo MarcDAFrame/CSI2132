@@ -12,12 +12,24 @@ def randomPick(li):
     return choice(li)
 
 def addRow():
-    test = cur.execute("""
+    cur.execute("""
         INSERT INTO Users (userID, phoneNumber, firstName, middleName, lastName, emailAddress) 
         VALUES (%(userID)s, %(phoneNumber)s, %(firstName)s, %(middleName)s, %(lastName)s, %(emailAddress)s) RETURNING userID;
     """, getUser())
-    id_of_new_row = cur.fetchone()[0]
+    userID = cur.fetchone()[0]
+    cur.execute("""
+        INSERT INTO ContactInfo (userID, emailAddress, phoneNumber) 
+        VALUES (%(userID)s, %(emailAddress)s, %(phoneNumber)s);
+    """, getContactInfo(userID))
+
+    cur.execute("""
+        INSERT INTO Address (userID, houseNumber, street, city, province, postalCode,
+        VALUES (%(userID)s, %(houseNumber)s, %(street)s, %(city)s, %(province)s, %(postalCode)s);
+    """, getAddress(userID))
+
+    
     print(id_of_new_row)
+
 
 def getUser():
     return {
@@ -128,4 +140,4 @@ def getPayment(rentalAgreementID):
     }
 
 print(getUser())
-addRow()
+# addRow()
