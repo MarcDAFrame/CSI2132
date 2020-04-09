@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as style from '../style.scss';
 import { BackButton } from 'app/components/BackButton';
+import { backendUrl } from 'app/config';
 
 interface Props {
 }
@@ -29,7 +30,7 @@ export class Admin extends React.Component<Props, State> {
 
     onClick = async () => {
         console.log('TODO');
-        const response = await fetch("http://localhost:1234/admin/runSQL", {
+        const response = await fetch(backendUrl+"/admin/runSQL", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,7 +5,7 @@
   "description": "CSI2132 Data Viewer",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --hot --progress --colors --port 3000 --open",
+    "start": "webpack-dev-server --mode development --hot --progress --colors --port 3000 --open --host 0.0.0.0",
     "demo": "webpack-dev-server --mode development --config ./webpack.config.demo.js --hot --progress --colors --port 3001 --open",
     "build": "webpack -p --progress --colors",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""

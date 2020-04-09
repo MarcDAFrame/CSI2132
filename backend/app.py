@@ -16,10 +16,8 @@ def getResult():
     return result
 
 @app.route('/')
-def addCar():
-    print(cur)
-    cur.execute("""CREATE DATABASE databasename""")
-    return 'Added'
+def test():
+    return 'Hello World'
 
 
 @app.route('/uploadProperty', methods=["POST"])
@@ -95,4 +93,4 @@ def runSQL():
 
 
 if __name__ == "__main__":
-    app.run(port=1234)
+    app.run(host="0.0.0.0", port=1234)

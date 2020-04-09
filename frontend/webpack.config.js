@@ -149,6 +149,7 @@ module.exports = {
     new BaseHrefWebpackPlugin({ baseHref: "/" }),
   ],
   devServer: {
+    host: "0.0.0.0",
     contentBase: sourcePath,
     hot: true,
     inline: true,

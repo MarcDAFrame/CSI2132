@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as style from '../style.scss';
 import { BackButton } from 'app/components/BackButton';
 import { AllPropertyTable } from 'app/components/AllPropertyTable';
+import { backendUrl } from 'app/config';
 
 interface Props {
 }
@@ -28,7 +29,7 @@ export class Employee extends React.Component<Props, State> {
 
     onClick = async () => {
         console.log('TODO');
-        const response = await fetch("http://localhost:1234/getProperties", {
+        const response = await fetch(backendUrl+"/getProperties", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
